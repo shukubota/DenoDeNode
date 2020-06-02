@@ -1,12 +1,24 @@
-type StatusType = '配送済' | '配送キャンセル';
-const statusValues = ['配送済', '配送キャンセル'];
+interface StatusValues {
+  [key: string]: string;
+  dlivered: string;
+  canceled: string;
+}
+
+export const statusValues: StatusValues = {
+  dlivered: '配送済',
+  canceled: '配送キャンセル',
+};
+
+export type Status = typeof statusValues[keyof typeof statusValues];
+type StatusKey = keyof typeof statusValues;
+
 
 export class OrderStatus {
-  value: StatusType;
-  constructor(status: string) {
-    if (!statusValues.includes(status)) {
+  value: Status;
+  constructor(status: Status) {
+    if (!Object.keys(statusValues).some((key: StatusKey) => statusValues[key] === status)) {
       throw new Error('statusが異常です');
     }
-    this.value = status as StatusType;
+    this.value = status as Status;
   }
 }

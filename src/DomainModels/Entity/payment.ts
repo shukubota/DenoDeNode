@@ -1,4 +1,4 @@
-import { PaymentStatus } from '../ValueObject/payment/PaymentStatus.ts';
+import { PaymentStatus, statusValues } from '../ValueObject/payment/PaymentStatus.ts';
 
 interface PaymentProps {
   id: number;
@@ -19,6 +19,10 @@ export class Payment {
   }
   changeStatus(status: PaymentStatus) {
     this.status = status;
+  }
+
+  cancel() {
+    this.status = new PaymentStatus(statusValues.canceled);
   }
 
   isValidSettlement() {

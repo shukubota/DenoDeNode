@@ -1,10 +1,11 @@
-import { OrderStatus }  from '../DomainModels/ValueObject/order/OrderStatus.ts';
+import { OrderStatus, Status }  from '../DomainModels/ValueObject/order/OrderStatus.ts';
 import { Order } from '../DomainModels/Entity/order.ts';
 import { db } from '../infrastructure/DataStore.ts';
 
 export interface IOrderRepository {
   save: (params: any) => Promise<any>;
   find: (orderId: number) => Promise<Order | null>;
+  findById: (orderId: number) => Promise<Order | null>;
 }
 
 export class OrderRepository {
@@ -23,5 +24,15 @@ export class OrderRepository {
     } else {
       return null;
     }
+  }
+
+  async findById(orderId: number) {
+    // const _order = db.find('Order', orderId);
+    // で返ってきたつもり
+    const _order = { id: 1, status: '配送済' };
+    const newStatus = _order.status as Status;
+    const orderStatus = new OrderStatus(newStatus);
+    const order = new Order({ id: _order.id, status: orderStatus });
+    return order || null;
   }
 }

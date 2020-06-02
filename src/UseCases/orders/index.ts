@@ -1,17 +1,21 @@
 import { IOrderRepository, OrderRepository } from '../../Repositories/orders.ts';
 import { IPaymentRepository, PaymentRepository } from '../../Repositories/payment.ts';
+import { OrderService, IOrderService } from '../../DomainServices/Orders/index.ts';
+import { PaymentService, IPaymentService } from '../../DomainServices/Payment/index.ts';
 import { Order } from '../../DomainModels/Entity/order.ts';
-import { OrderStatus } from '../../DomainModels/ValueObject/order/OrderStatus.ts';
 import { Payment } from '../../DomainModels/Entity/payment.ts';
-import { PaymentStatus } from '../../DomainModels/ValueObject/payment/PaymentStatus.ts';
 
 export class OrderUseCase {
   orderRepository: IOrderRepository;
   paymentRepository: IPaymentRepository;
+  orderService: IOrderService;
+  paymentService: IPaymentService;
 
   constructor() {
     this.orderRepository = new OrderRepository();
     this.paymentRepository = new PaymentRepository();
+    this.orderService = new OrderService();
+    this.paymentService = new PaymentService();
   }
 
   async cancel(orderId: number) {
@@ -22,8 +26,7 @@ export class OrderUseCase {
     }
 
     // オーダーをキャンセルする
-    const newOrderStatus = new OrderStatus('配送キャンセル');
-    order.changeStatus(newOrderStatus);
+    await order.cancel();
     await this.orderRepository.save(order); // <- Repository使っている
     
     // 返金する
@@ -31,8 +34,8 @@ export class OrderUseCase {
     if (!payment) {
       throw new Error('決済レコードがないよ');
     }
-    const newPaymentStatus = new PaymentStatus('返金');
-    payment.changeStatus(newPaymentStatus);
+    await payment.cancel();
+    await this.paymentService.cancel(payment);
 
     // 外部paymentサービスに決済キャンセルをリクエスト
     // // 外部paymentサービスと取引があるかチェック

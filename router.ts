@@ -6,12 +6,15 @@ import {
 
 import { OrderUseCase } from './src/UseCases/orders/index.ts';
 
+import { registerItemSku } from './src/controllers/itemSkus/registerItemSkus/index.ts';
+
 export const routes = () => {
   const router = createRouter();
 
   router.get("posts", getAllPosts);
   router.get("orders/cancel", cancelOrder);
   router.post("orders/cancel", contentTypeFilter("application/json"), cancelOrder);
+  router.post("item-skus/register", contentTypeFilter("application/json"), registerItemSku)
   // router.get(new RegExp("^posts/(.+)"), getPost);
 
   return router;
