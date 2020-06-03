@@ -3,9 +3,8 @@ export enum StatusValues {
   canceled = 2,
 }
 
-export class PaymentStatus {
-  value: StatusValues;
-  constructor(status: StatusValues) {
-    this.value = status;
+export class PaymentStatus extends Number {
+  constructor(props: StatusValues) {
+    super(props);
   }
 }
