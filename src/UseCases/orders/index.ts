@@ -26,7 +26,7 @@ export class OrderUseCase {
     }
 
     // オーダーをキャンセルする
-    await order.cancel();
+    await order.changeStatusToCancel();
     await this.orderRepository.save(order); // <- Repository使っている
     
     // 返金する
@@ -34,7 +34,6 @@ export class OrderUseCase {
     if (!payment) {
       throw new Error('決済レコードがないよ');
     }
-    await payment.cancel();
     await this.paymentService.cancel(payment);
 
     // 外部paymentサービスに決済キャンセルをリクエスト

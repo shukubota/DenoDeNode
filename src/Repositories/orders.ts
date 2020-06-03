@@ -1,4 +1,4 @@
-import { OrderStatus, Status }  from '../DomainModels/ValueObject/order/OrderStatus.ts';
+import { OrderStatus, StatusValues }  from '../DomainModels/ValueObject/order/OrderStatus.ts';
 import { Order } from '../DomainModels/Entity/order.ts';
 import { db } from '../infrastructure/DataStore.ts';
 
@@ -16,9 +16,9 @@ export class OrderRepository {
   async find(orderId: number) {
     // const _order = db.find('Order', orderId);
     // で返ってきたつもり
-    const _order = { id: 1, status: '配送済' };
+    const _order = { id: 1, status: 2 };
     if (_order) {
-      const orderStatus = new OrderStatus('配送済');
+      const orderStatus = new OrderStatus(_order.status);
       const order = new Order({ id: _order.id, status: orderStatus });
       return order;
     } else {
@@ -29,8 +29,8 @@ export class OrderRepository {
   async findById(orderId: number) {
     // const _order = db.find('Order', orderId);
     // で返ってきたつもり
-    const _order = { id: 1, status: '配送済' };
-    const newStatus = _order.status as Status;
+    const _order = { id: 1, status: 1 };
+    const newStatus = _order.status;
     const orderStatus = new OrderStatus(newStatus);
     const order = new Order({ id: _order.id, status: orderStatus });
     return order || null;

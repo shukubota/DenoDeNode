@@ -4,9 +4,15 @@ import { Color } from '../DomainModels/ValueObject/itemSku/Color.ts';
 import { Brand } from '../DomainModels/ValueObject/itemSku/Brand.ts';
 import { Size } from '../DomainModels/ValueObject/itemSku/Size.ts';
 
+interface FindByParams {
+  color: Color,
+  size: Size,
+  brand: Brand,
+}
+
 export interface IItemSkuRepository {
   // save: (params: any) => Promise<any>;
-  findByCSB: (color: Color, size: Size, brand: Brand) => Promise<ItemSku | null>;
+  findByParams: (params: FindByParams) => Promise<ItemSku | null>;
 }
 
 export class ItemSkuRepository {
@@ -14,7 +20,7 @@ export class ItemSkuRepository {
   //   // 本当はupsert
   //   return db.update('Order', params.id, params);
   // }
-  async findByCSB(color: Color, size: Size, brand: Brand) {
+  async findByParams(params: FindByParams) {
     // const _itemSku = db.find('ItemSku', { color, size, brand });
     // で返ってきたつもり
     const _itemSku = { id: 1, color: 'red', size: 36, brand: 'moririn' };

@@ -17,11 +17,4 @@ export class OrderService {
     const _order = await this.orderRepository.findById(order.id);
     return !!_order;
   }
-
-  async confirmExist(orderId: number) {
-    const _order = await this.orderRepository.findById(orderId);
-    if (!_order) {
-      throw new Error('orderが見つかりません')
-    }
-  }
 }

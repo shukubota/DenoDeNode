@@ -13,7 +13,11 @@ export class ItemSkuService {
   }
   
   isExist(itemSku: ItemSku) {
-    const _itemSku = this.itemSkuRepository.findByCSB(itemSku.color, itemSku.size, itemSku.brand);
+    const _itemSku = this.itemSkuRepository.findByParams({
+      color: itemSku.color,
+      size: itemSku.size,
+      brand: itemSku.brand,
+    });
     return !!_itemSku;
   }
 }

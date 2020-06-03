@@ -2,7 +2,7 @@ import Seasons from '../ValueObject/itemSku/Seasons.ts';
 import { Size } from '../ValueObject/itemSku/Size.ts';
 import { Color } from '../ValueObject/itemSku/Color.ts';
 import { Brand } from '../ValueObject/itemSku/Brand.ts';
-import { IItemSkuRepository, ItemSkuRepository  } from '../../Repositories/itemSkus.ts';
+// import { IItemSkuRepository, ItemSkuRepository  } from '../../Repositories/itemSkus.ts';
 interface ItemSkuProps {
   id: number;
   color: Color;
@@ -18,7 +18,7 @@ export class ItemSku {
   color: Color;
   brand: Brand;
 
-  itemSkuRepository: IItemSkuRepository;
+  // itemSkuRepository: IItemSkuRepository;
 
   constructor(props: ItemSkuProps) {
     // brandがなければエラー
@@ -26,8 +26,8 @@ export class ItemSku {
       throw new Error('brandがないよ');
     }
     // colorがなければエラー
-    if (!props.brand) {
-      throw new Error('brandがないよ');
+    if (!props.color) {
+      throw new Error('colorがないよ');
     }
 
     // sizeがなければエラー
@@ -40,8 +40,8 @@ export class ItemSku {
     this.color = props.color;
     this.seasons = props.seasons;
 
-    // アンチパターン
-    this.itemSkuRepository = new ItemSkuRepository();
+    // // アンチパターン
+    // this.itemSkuRepository = new ItemSkuRepository();
   }
   changeSeasons(newSeason: Seasons): void {
     this.seasons = newSeason;
@@ -52,8 +52,12 @@ export class ItemSku {
   }
   
   // アンチパターン
-  isExist() {
-    const itemSku = this.itemSkuRepository.findByCSB(this.color, this.size, this.brand);
-    return !!itemSku;
-  }
+  // isExist() {
+  //   const itemSku = this.itemSkuRepository.findByParams({
+  //     color: this.color,
+  //     size: this.size,
+  //     brand: this.brand
+  //   });
+  //   return !!itemSku;
+  // }
 }

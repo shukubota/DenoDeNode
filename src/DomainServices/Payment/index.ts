@@ -12,7 +12,7 @@ export class PaymentService {
     this.paymentRepository = new PaymentRepository();
   }
   async cancel(payment: Payment) {
-    payment.cancel();
+    payment.changeStatusToCancel();
     // 外部paymentサービスに決済キャンセルをリクエスト
     // // 外部paymentサービスと取引があるかチェック
     if (!payment.isValidSettlement()) {
