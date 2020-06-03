@@ -2,10 +2,6 @@ import { Payment } from '../../DomainModels/Entity/payment.ts';
 import { PaymentRepository, IPaymentRepository } from '../../Repositories/payment.ts';
 import { ExternalPaymentModule } from '../../modules/externalPaymentModule/index.ts';
 
-export interface IPaymentService {
-  cancel: (payment: Payment) => void;
-} 
-
 export class PaymentService {
   paymentRepository: IPaymentRepository;
   constructor() {

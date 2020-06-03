@@ -1,15 +1,15 @@
 import { IOrderRepository, OrderRepository } from '../../Repositories/orders.ts';
 import { IPaymentRepository, PaymentRepository } from '../../Repositories/payment.ts';
-import { OrderService, IOrderService } from '../../DomainServices/Orders/index.ts';
-import { PaymentService, IPaymentService } from '../../DomainServices/Payment/index.ts';
+import { OrderService } from '../../DomainServices/Orders/index.ts';
+import { PaymentService } from '../../DomainServices/Payment/index.ts';
 import { Order } from '../../DomainModels/Entity/order.ts';
 import { Payment } from '../../DomainModels/Entity/payment.ts';
 
 export class OrderUseCase {
   orderRepository: IOrderRepository;
   paymentRepository: IPaymentRepository;
-  orderService: IOrderService;
-  paymentService: IPaymentService;
+  orderService: OrderService;
+  paymentService: PaymentService;
 
   constructor() {
     this.orderRepository = new OrderRepository();
@@ -36,13 +36,6 @@ export class OrderUseCase {
     }
     await this.paymentService.cancel(payment);
 
-    // 外部paymentサービスに決済キャンセルをリクエスト
-    // // 外部paymentサービスと取引があるかチェック
-    if (!payment.isValidSettlement()) {
-      throw new Error('キャンセルすべき決済がないよ')
-    };
-    await this.paymentRepository.cancelSettlement(payment); // 外部payment service のAPIに投げるのをrepositoryに依頼
-    await this.paymentRepository.save(payment);
     return Promise.resolve();
   }
 }

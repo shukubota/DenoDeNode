@@ -1,5 +1,5 @@
 export enum StatusValues {
-  dlivered = 1,
+  paid = 1,
   canceled = 2,
 }
 
