@@ -1,6 +1,5 @@
-class Name {
-  fullName: string;
-  constructor(name: string) {
-    this.fullName = name;
+export class Name extends String{
+  constructor(props: string) {
+    super(props);
   }
 }

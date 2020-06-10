@@ -17,7 +17,7 @@ export class PaymentRepository {
   async findByOrderId(orderId: number) {
     // const _payment = db.find('Payment', orderId);
     // で返ってきたつもり
-    const _payment = { id: 1, status: '決済済', transactionId: 111 };
+    const _payment = { id: 1, status: 1, transactionId: 111 };
     if (_payment) {
       const paymentStatus = new PaymentStatus(_payment.status);
       const payment = new Payment({ id: _payment.id, status: paymentStatus, transactionId: _payment.transactionId });

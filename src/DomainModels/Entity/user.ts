@@ -1,20 +1,35 @@
+import { Name } from '../ValueObject/user/name.ts';
+import { Email } from '../ValueObject/user/email.ts';
+import { Id } from '../ValueObject/user/id.ts';
+import { EncryptedPassword } from '../ValueObject/user/password.ts';
+import { UserRepository, IUserRepository } from '../../Repositories/users.ts';
+
 interface UserProps {
-  name: Name;
+  id?: Id;
+  name?: Name;
+  email?: Email;
+  encryptedPassword?: EncryptedPassword;
+  authenticationToken?: string;
 }
 
-class User {
-  id!: number;
-  name!: Name;
+export class User {
+  id: Id | null;
+  name: Name | null;
+  email: Email | null;
+  encryptedPassword: EncryptedPassword | null;
+  authenticationToken: string | null;
+
+  userRepository: IUserRepository;
   constructor(props: UserProps) {
-    if (props.name.fullName.length > 3) {
-      throw new Error('名前長すぎ');
-    }
-    this.name = new Name(props.name.fullName);
+    this.id = props.id || null;
+    this.name = props.name || null;
+    this.email = props.email || null;
+    this.encryptedPassword = props.encryptedPassword || null;
+
+    this.userRepository = new UserRepository();
+    this.authenticationToken = props.authenticationToken || null;
   }
-  changeName(newName: string): void {
-    if (newName.length > 3) {
-      throw new Error('名前長すぎ');
-    }
-    this.name = new Name(newName);
+  changeName(newName: Name): void {
+    this.name = newName;
   }
 }

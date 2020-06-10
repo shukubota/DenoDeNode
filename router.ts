@@ -6,13 +6,21 @@ import {
 
 import { OrderUseCase } from './src/UseCases/orders/index.ts';
 
+import { registerItemSku } from './src/controllers/itemSkus/registerItemSkus/index.ts';
+import { ChangeUserInfo } from './src/controllers/users/changeUserInfo/index.ts';
+
+const changeUserInfo = new ChangeUserInfo();
+
 export const routes = () => {
   const router = createRouter();
 
   router.get("posts", getAllPosts);
   router.get("orders/cancel", cancelOrder);
   router.post("orders/cancel", contentTypeFilter("application/json"), cancelOrder);
+  router.post("item-skus/register", contentTypeFilter("application/json"), registerItemSku);
   // router.get(new RegExp("^posts/(.+)"), getPost);
+
+  router.put("users/change-info", contentTypeFilter("application/json"), changeUserInfo.handler)
 
   return router;
 };

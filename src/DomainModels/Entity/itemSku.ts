@@ -1,19 +1,63 @@
+import Seasons from '../ValueObject/itemSku/Seasons.ts';
+import { Size } from '../ValueObject/itemSku/Size.ts';
+import { Color } from '../ValueObject/itemSku/Color.ts';
+import { Brand } from '../ValueObject/itemSku/Brand.ts';
+// import { IItemSkuRepository, ItemSkuRepository  } from '../../Repositories/itemSkus.ts';
 interface ItemSkuProps {
-  seasons: Seasons;
+  id: number;
+  color: Color;
+  brand: Brand;
+  size: Size;
+  seasons?: Seasons;
 }
 
-class ItemSku {
-  seasons!: Seasons;
+export class ItemSku {
+  id!: number;
+  seasons?: Seasons;
+  size: Size; 
+  color: Color;
+  brand: Brand;
+
+  // itemSkuRepository: IItemSkuRepository;
+
   constructor(props: ItemSkuProps) {
-    if (props.seasons.summer && props.seasons.winter) {
-      throw new Error('夏も冬も着れないよ');
+    // brandがなければエラー
+    if (!props.brand) {
+      throw new Error('brandがないよ');
     }
+    // colorがなければエラー
+    if (!props.color) {
+      throw new Error('colorがないよ');
+    }
+
+    // sizeがなければエラー
+    if (!props.size) {
+      throw new Error('sizeがないよ');
+    }
+    this.id = props.id;
+    this.size = props.size;
+    this.brand = props.brand;
+    this.color = props.color;
     this.seasons = props.seasons;
+
+    // // アンチパターン
+    // this.itemSkuRepository = new ItemSkuRepository();
   }
   changeSeasons(newSeason: Seasons): void {
-    if (newSeason.summer && newSeason.winter) {
-      throw new Error('夏も冬も着れないよ');
-    }
     this.seasons = newSeason;
   }
+
+  isEqual(itemSku: ItemSku): boolean {
+    return this.id === itemSku.id;
+  }
+  
+  // アンチパターン
+  // isExist() {
+  //   const itemSku = this.itemSkuRepository.findByParams({
+  //     color: this.color,
+  //     size: this.size,
+  //     brand: this.brand
+  //   });
+  //   return !!itemSku;
+  // }
 }

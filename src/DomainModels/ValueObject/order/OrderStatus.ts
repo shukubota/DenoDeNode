@@ -1,12 +1,13 @@
-type StatusType = '配送済' | '配送キャンセル';
-const statusValues = ['配送済', '配送キャンセル'];
+export enum StatusValues {
+  delivered = 1,
+  canceled = 2,
+  onDelivery = 3,
+  preparing = 4,
+  ordered  = 5,
+}
 
-export class OrderStatus {
-  value: StatusType;
-  constructor(status: string) {
-    if (!statusValues.includes(status)) {
-      throw new Error('statusが異常です');
-    }
-    this.value = status as StatusType;
+export class OrderStatus extends Number {
+  constructor(props: StatusValues) {
+    super(props);
   }
 }

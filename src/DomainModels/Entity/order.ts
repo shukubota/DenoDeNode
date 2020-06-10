@@ -1,4 +1,4 @@
-import { OrderStatus } from '../ValueObject/order/OrderStatus.ts';
+import { OrderStatus, StatusValues } from '../ValueObject/order/OrderStatus.ts';
 
 interface OrderProps {
   id: number;
@@ -11,7 +11,13 @@ export class Order {
     this.id = props.id;
     this.status = props.status;
   }
-  changeStatus(status: OrderStatus) {
-    this.status = status;
+  changeStatusToCancel() {
+
+    // // cancelにできる条件
+    // if (this.status === StatusValues.delivered) {
+
+    // }
+
+    this.status = new OrderStatus(StatusValues.canceled);
   }
 }
