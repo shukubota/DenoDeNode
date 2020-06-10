@@ -26,8 +26,8 @@ export class OrderUseCase {
     }
 
     // オーダーをキャンセルする
-    await order.changeStatusToCancel();
-    await this.orderRepository.save(order); // <- Repository使っている
+    order.changeStatusToCancel();
+    await this.orderRepository.save(order);
     
     // 返金する
     const payment: Payment | null = await this.paymentRepository.findByOrderId(orderId);

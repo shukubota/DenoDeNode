@@ -12,6 +12,12 @@ export class Order {
     this.status = props.status;
   }
   changeStatusToCancel() {
+
+    // // cancelにできる条件
+    // if (this.status === StatusValues.delivered) {
+
+    // }
+
     this.status = new OrderStatus(StatusValues.canceled);
   }
 }
