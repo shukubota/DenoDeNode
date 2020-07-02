@@ -103,4 +103,39 @@ export class UserRepository {
   //   });
   //   return user;
   // }
+
+  async findByIdWithOrders(params: FindByIdWithOrders) {
+    const _userWithOrder = await db.find('User', params);
+
+    const _orders = _userWithOrder.orders.map(_order => {
+      const orderId = new OrderId(_order.id);
+      const deliveredDate = new DeliveredDate(_order.delivered_date);
+      const order = new Order({
+        id: orderId,
+        deliveredDate,
+      });
+      return order;
+    });
+
+    const orders = new Orders(_orders);
+    const email = new Email(_userWithOrder.email);
+    const id = new Id(_userWithOrder.id);
+    const user = new User({
+      id,
+      email,
+      orders,
+    });
+    return user;
+  }
+
+  async findByIdWithOrders(params: FindByIdWithOrders) {
+    const _userWithOrder = await db.find('User', params);
+
+    const user = this.userFactory.confirmOwnOrders({
+      orders: _userWithOrder.orders,
+      email: _userWithOrder.email,
+      id: _userWithOrder.id,
+    });
+    return user;
+  }
 }

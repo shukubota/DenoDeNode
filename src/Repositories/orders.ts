@@ -1,6 +1,6 @@
 import { OrderStatus, StatusValues }  from '../DomainModels/ValueObject/order/OrderStatus.ts';
 import { Order } from '../DomainModels/Entity/order.ts';
-import { db } from '../infrastructure/DataStore.ts';
+import { db } from '../Infrastructures/DataStore.ts';
 
 export interface IOrderRepository {
   save: (params: any) => Promise<any>;

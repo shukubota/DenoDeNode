@@ -35,4 +35,26 @@ export class UserFactory {
     });
     return user;
   }
+
+  confirmOwnOrders (params: ConfirmOwnOrdersParams) {
+    const _orders = params.orders.map(_order => {
+      const orderId = new OrderId(_order.id);
+      const deliveredDate = new DeliveredDate(_order.delivered_date);
+      const order = new Order({
+        id: orderId,
+        deliveredDate,
+      });
+      return order;
+    });
+
+    const orders = new Orders(_orders);
+    const email = new Email(params.email);
+    const id = new Id(params.id);
+    const user = new User({
+      id,
+      email,
+      orders,
+    });
+    return user;
+  }
 }

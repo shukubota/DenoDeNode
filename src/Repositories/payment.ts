@@ -1,6 +1,6 @@
 import { PaymentStatus }  from '../DomainModels/ValueObject/payment/PaymentStatus.ts';
 import { Payment } from '../DomainModels/Entity/payment.ts';
-import { db } from '../infrastructure/DataStore.ts';
+import { db } from '../Infrastructures/DataStore.ts';
 import { ExternalPaymentModule } from '../modules/externalPaymentModule/index.ts';
 
 export interface IPaymentRepository {

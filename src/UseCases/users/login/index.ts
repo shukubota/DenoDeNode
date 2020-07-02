@@ -6,17 +6,17 @@ interface LoginParams {
   email: string;
   password: string; 
 }
-export class Login {
-  async execute(params: LoginParams) {
-    // const email = new Email(params.email);
-    // const encryptedPassword = new EncryptedPassword(params.password);
+export class LoginUsecase {
+  async login(params: LoginParams) {
+    const email = new Email(params.email);
+    const encryptedPassword = new EncryptedPassword(params.password);
 
-    // const user = new User({ email, encryptedPassword });
-    // await user.authenticate();
+    const user = new User({ email, encryptedPassword });
+    await user.authenticate();
 
-    // // クライアントに認証トークンを返す
-    // return {
-    //   authenticationToken: user.authenticationToken,
-    // };
+    // クライアントに認証トークンを返す
+    return {
+      authenticationToken: user.authenticationToken,
+    };
   }
 }
