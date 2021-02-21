@@ -1,13 +1,13 @@
 
 import {
   ServerRequest,
-} from "https://servestjs.org/@v1.0.0/mod.ts";
-import { RegisterItemSkus } from "../../../UseCases/itemSkus/registerItemSkus/index.ts";
+} from "https://servestjs.org/@v1.1.9/mod.ts";
+// import { RegisterItemSkus } from "../../../UseCases/itemSkus/registerItemSkus/index.ts";
 
 export const registerItemSku = async (req: ServerRequest) => {
   const bodyJson = await req.json();
-  const registerItemSkus = new RegisterItemSkus();
-  await registerItemSkus.execute();
+  // const registerItemSkus = new RegisterItemSkus();
+  // await registerItemSkus.execute();
 
   await req.respond({
     status: 200,

@@ -1,4 +1,4 @@
-import { createApp } from 'https://servestjs.org/@v1.0.0/mod.ts';
+import { createApp } from 'https://servestjs.org/@v1.1.9/mod.ts';
 import { routes } from "./router.ts";
 
 const app = createApp();
